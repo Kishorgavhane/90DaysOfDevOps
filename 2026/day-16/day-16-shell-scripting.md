@@ -1,4 +1,4 @@
-### 🧠 Day 16 – Shell Scripting Basics
+### 🧠 Day 16 – Shell Scripting
 
 ## my First Script
 
