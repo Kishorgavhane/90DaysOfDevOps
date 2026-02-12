@@ -66,7 +66,7 @@ Deleted files: 0
 
 ---
 
-## Task 1: Log Backup Script
+## Task 2: Log Backup Script
 
 **Why need?**
 - regular backups
@@ -122,3 +122,108 @@ echo "Old backups cleaned"
 
 ---
 
+### Crontab Basics
+
+- It runs scripts automatically at specific times.
+- Instead of running scripts manually every day, we let the system handle it.
+**Example:**
+- Backup every Sunday automatically
+- Rotate logs daily
+- Run health checks every 5 minutes
+
+## Cron Syntax Explained
+
+```text
+* * * * * command
+| | | | |
+| | | | └── Day of week (0-7) → 0 or 7 = Sunday
+| | | └──── Month (1-12)
+| | └────── Day of month (1-31)
+| └──────── Hour (0-23)
+└────────── Minute (0-59)
+```
+
+**Example:**
+```text
+0 2 * * * script.sh
+```
+
+**Meaning:**
+- 0 minute
+- 2 hour (2 AM)
+- every day
+- every month
+- every day of week
+
+## Common Time Examples
+| Time                 | Cron Format   |
+| -------------------- | ------------- |
+| Every day at 2 AM    | `0 2 * * *`   |
+| Every Sunday at 3 AM | `0 3 * * 0`   |
+| Every 5 minutes      | `*/5 * * * *` |
+
+## Crontab Entries (Do not apply without verification)
+
+## Run log_rotate.sh every day at 2 AM
+
+`0 2 * * * /home/ubuntu/shell_scripts/log_rotate.sh /var/log >> /var/log/log_rotate.log 2>&1`
+
+
+## Run backup.sh every Sunday at 3 AM
+
+`0 3 * * 0 /home/ubuntu/shell_scripts/backup.sh /home/ubuntu/data /home/ubuntu/backups >> /var/log/backup.log 2>&1`
+
+
+## Run health_check.sh every 5 minutes
+
+`*/5 * * * * /home/ubuntu/shell_scripts/health_check.sh >> /var/log/health_check.log 2>&1`
+
+**Why We Added `>> logfile 2>&1`**
+**Means:**
+- Save normal output
+- Save error output
+- Append to log file
+
+# Without logging, cron runs silently.
+
+# How to Check Existing Cron Jobs
+**Run:**
+```bash
+crontab -l
+```
+
+**To edit cron:**
+```bash
+crontab -e
+```
+
+---
+
+## Combine Everything
+
+**Create a `maintenance.sh`**
+
+```bash
+#!/bin/bash
+set -euo pipefail
+
+LOG_FILE="/var/log/maintenance.log"
+
+echo "$(date): Starting maintenance" >> $LOG_FILE
+
+./log_rotate.sh /var/log >> $LOG_FILE 2>&1
+./backup.sh /home/ubuntu/data /home/ubuntu/backups >> $LOG_FILE 2>&1
+
+echo "$(date): Maintenance completed" >> $LOG_FILE
+```
+**Cron entry (daily 1 AM):**
+```bash
+0 1 * * * /path/maintenance.sh
+```
+
+---
+
+## Today I worked on a real shell scripting project with log rotation, backup, and cron scheduling.
+## I learned how to automate maintenance tasks and run them at specific times using crontab.
+## I understood how to verify whether a cron job actually runs by checking logs and system status.
+## This practice helped me move from basic scripting to more practical, production-style automation.
