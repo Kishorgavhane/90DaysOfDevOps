@@ -1,17 +1,17 @@
-### Day 19 – Real-World Shell Scripting Project
+# Day 19 – Real-World Shell Scripting Project
 
 ## Task 1: Log Rotation Script
 
-# Servers generate logs daily:
+## Servers generate logs daily:
 - application logs
 - system logs
 - error logs
 
-# If we don’t clean them:
+## If we don’t clean them:
 - disk gets full
 - server crashes
 
-# So we:
+## So we:
 - compress old logs
 - delete very old logs
 
@@ -122,7 +122,7 @@ echo "Old backups cleaned"
 
 ---
 
-### Crontab Basics
+## Crontab Basics
 
 - It runs scripts automatically at specific times.
 - Instead of running scripts manually every day, we let the system handle it.
@@ -223,7 +223,8 @@ echo "$(date): Maintenance completed" >> $LOG_FILE
 
 ---
 
-## Today I worked on a real shell scripting project with log rotation, backup, and cron scheduling.
-## I learned how to automate maintenance tasks and run them at specific times using crontab.
-## I understood how to verify whether a cron job actually runs by checking logs and system status.
-## This practice helped me move from basic scripting to more practical, production-style automation.
+- **Today I worked on a real shell scripting project with log rotation, backup, and cron scheduling.**
+- **I learned how to automate maintenance tasks and run them at specific times using crontab.**
+- **I understood how to verify whether a cron job actually runs by checking logs and system status.**
+- **This practice helped me move from basic scripting to more practical, production-style automation.**
+
