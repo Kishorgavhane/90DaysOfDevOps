@@ -184,9 +184,9 @@ echo "Old backups cleaned"
 - Save error output
 - Append to log file
 
-# Without logging, cron runs silently.
+## Without logging, cron runs silently.
 
-# How to Check Existing Cron Jobs
+## How to Check Existing Cron Jobs
 **Run:**
 ```bash
 crontab -l
@@ -227,4 +227,5 @@ echo "$(date): Maintenance completed" >> $LOG_FILE
 - **I learned how to automate maintenance tasks and run them at specific times using crontab.**
 - **I understood how to verify whether a cron job actually runs by checking logs and system status.**
 - **This practice helped me move from basic scripting to more practical, production-style automation.**
+
 
