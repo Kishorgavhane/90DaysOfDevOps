@@ -348,3 +348,287 @@ esac
 
 ---
 
+# Task 3 – Loops
+
+## 1. for Loop
+- Used when you know how many times to repeat or have a list.
+**List-Based for Loop**
+```bash
+for item in one two three; do
+  echo "$item"
+done
+```
+**Example:**
+```bash
+for server in web1 web2 web3; do
+  echo "Checking $server"
+done
+```
+**Range-Based Loop**
+```bash
+for i in {1..5}; do
+  echo "$i"
+done
+```
+
+**C-Style for Loop**
+```bash
+for ((i=0; i<5; i++)); do
+  echo "$i"
+done
+```
+
+## 2. while Loop
+
+- Runs while condition is true.
+```bash
+while [ condition ]; do
+  commands
+done
+```
+**Example:**
+```bash
+COUNT=1
+
+while [ "$COUNT" -le 5 ]; do
+  echo "$COUNT"
+  COUNT=$((COUNT + 1))
+done
+```
+```bash
+while ! systemctl is-active --quiet nginx; do
+  echo "Waiting for nginx..."
+  sleep 2
+done
+```
+
+## 3. until Loop
+
+- Runs until condition becomes true.
+- Opposite of `while`.
+```bash
+until [ condition ]; do
+  commands
+done
+```
+**Example:**
+```bash
+COUNT=1
+
+until [ "$COUNT" -gt 5 ]; do
+  echo "$COUNT"
+  COUNT=$((COUNT + 1))
+done
+```
+
+## 4. Loop Control
+
+- **`break`**
+Stops loop immediately.
+```bash
+for i in 1 2 3 4; do
+  if [ "$i" -eq 3 ]; then
+    break
+  fi
+  echo "$i"
+done
+```
+
+- **`continue`**
+Skips current iteration.
+```bash
+for i in 1 2 3 4; do
+  if [ "$i" -eq 3 ]; then
+    continue
+  fi
+  echo "$i"
+done
+```
+
+## 5. Looping Over Files
+
+Very common in DevOps.
+```bash
+for file in *.log; do
+  echo "Processing $file"
+done
+```
+
+**Example:**
+```bash
+for file in *.log; do
+  rm "$file"
+done
+```
+## 6. Looping Over Command Output
+
+Used for processing dynamic results.
+- **Using `while read`**
+```bash
+while read line; do
+  echo "Line: $line"
+done < file.txt
+```
+- **Loop Over Command Output**
+```bash
+ps aux | while read line; do
+  echo "$line"
+done
+```
+- **Safer Version**
+```bash
+while IFS= read -r line; do
+  echo "$line"
+done < file.txt
+```
+
+## Comparison
+| Loop     | Use When                   |
+| -------- | -------------------------- |
+| for      | Fixed list or range        |
+| while    | Condition-based repetition |
+| until    | Run until condition true   |
+| break    | Stop loop                  |
+| continue | Skip iteration             |
+
+
+---
+
+# Task 4 – Functions
+
+- **Note: A function is a reusable block of code. Instead of repeating commands, you define them once and call them when needed.**
+
+## 1. Basic Function Syntax
+
+```bash
+function_name() {
+  commands
+}
+```
+
+**Or:**
+
+```bash
+function function_name {
+  commands
+}
+```
+- Both work.
+
+## 2. Calling a Function
+
+```bash
+greet() {
+  echo "Hello DevOps"
+}
+
+greet
+```
+
+## 3. Function with Arguments
+- Functions can accept arguments like scripts.
+```bash
+add() {
+  echo $(($1 + $2))
+}
+
+add 5 3
+```
+**Inside Function**
+| Variable | Meaning         |
+| -------- | --------------- |
+| $1       | First argument  |
+| $2       | Second argument |
+| $@       | All arguments   |
+| $#       | Total arguments |
+
+## 4. Returning Values
+```bash
+check_file() {
+  if [ -f "$1" ]; then
+    return 0
+  else
+    return 1
+  fi
+}
+
+check_file test.txt
+echo $?   # prints exit status
+```
+## 5. Returning Output
+- Use `echo` and capture output.
+```bash
+get_date() {
+  echo "$(date +%Y-%m-%d)"
+}
+
+TODAY=$(get_date)
+echo "$TODAY"
+```
+
+## 6. Local Variables
+- Without `local`, variables become global.
+```bash
+my_func() {
+  local NAME="DevOps"
+  echo "$NAME"
+}
+```
+
+## 7. Function Order Rule
+- Functions must be defined before they are called.
+```bash
+greet() { echo "Hi"; }
+greet
+```
+
+- **8. Example:**
+```bash
+check_service() {
+  if systemctl is-active --quiet "$1"; then
+    echo "$1 is running"
+  else
+    echo "$1 is not running"
+  fi
+}
+
+check_service nginx
+```
+
+## 9. Using Main Function
+```bash
+main() {
+  echo "Starting script"
+}
+
+main
+```
+
+## 10 Combining Functions
+
+```bash
+log_info() {
+  echo "[INFO] $1"
+}
+
+log_error() {
+  echo "[ERROR] $1"
+}
+
+log_info "Script started"
+log_error "Something failed"
+```
+##  Reference Table
+
+| Concept        | Syntax          |
+| -------------- | --------------- |
+| Define         | name() { }      |
+| Call           | name            |
+| Argument       | $1, $2          |
+| Return code    | return 0        |
+| Capture output | VAR=$(function) |
+| Local variable | local VAR       |
+
+
+---
+
