@@ -632,3 +632,222 @@ log_error "Something failed"
 
 ---
 
+# Task 5 – Text Processing Commands
+
+## 1. grep – Search Patterns
+- Search for text inside files.
+**Useful Flags**
+| Flag | Meaning                |
+| ---- | ---------------------- |
+| -i   | Ignore case            |
+| -r   | Recursive search       |
+| -c   | Count matches          |
+| -n   | Show line numbers      |
+| -v   | Invert match (exclude) |
+| -E   | Extended regex         |
+
+**Examples:**
+- Case insensitive:
+```bash
+grep -i "error" file.log
+```
+- Count matches:
+```bash
+grep -c "ERROR" file.log
+```
+- Show line numbers:
+```bash
+grep -n "CRITICAL" file.log
+```
+- Exclude pattern:
+```bash
+grep -v "INFO" file.log
+```
+- Multiple patterns:
+```bash
+grep -E "ERROR|FAILED" file.log
+```
+- Recursive search:
+```bash
+grep -r "password" /var/www
+```
+
+## 2. awk – Column Processing
+
+- **Print Columns**
+```bash
+awk '{print $1}' file
+```
+
+- **Field Separator**
+Default separator = space
+- Custom separator:
+```bash
+awk -F: '{print $1}' /etc/passwd
+```
+- Pattern Matching
+```bash
+awk '/ERROR/ {print $0}' file.log
+```
+- BEGIN / END Blocks
+```bash
+awk '
+BEGIN {print "Start"}
+{print $1}
+END {print "End"}
+' file
+```
+- **Example:**
+Get disk usage column:
+```bash
+df -h | awk '{print $5}'
+```
+
+## 3. sed – Stream Editor
+- Used for modifying text.
+- **Substitute (Replace)**
+```bash
+sed 's/old/new/' file
+```
+Replace all:
+```bash
+sed 's/foo/bar/g' file
+```
+- **In-place Edit**
+```bash
+sed -i 's/foo/bar/g' file.txt
+```
+- **Delete Lines**
+- Delete line 3:
+```bash
+sed '3d' file
+```
+- Delete matching pattern:
+```bash
+sed '/ERROR/d' file
+```
+- **Example:**
+```bash
+sed -i 's/port=80/port=8080/' app.conf
+```
+
+## 4. cut – Extract Columns
+
+ - **By Delimiter**
+```bash
+cut -d: -f1 /etc/passwd
+```
+-d → delimiter
+-f → field number
+
+- **Extract Characters**
+```bash
+cut -c1-5 file.txt
+```
+
+## 5. sort – Sort Data
+
+- Alphabetical:
+```bash
+sort file.txt
+```
+- Numerical:
+```bash
+sort -n file.txt
+```
+- Reverse:
+```bash
+sort -r file.txt
+```
+- Numeric reverse:
+```bash
+sort -rn file.txt
+```
+- Unique sorted:
+```bash
+sort file.txt | uniq
+```
+## 6. uniq – Remove Duplicates
+- **⚠ Works only on sorted input.**
+
+- Remove duplicates:
+```bash
+uniq file.txt
+```
+- Count occurrences:
+```bash
+uniq -c file.txt
+```
+- Sort by count:
+```bash
+sort file.txt | uniq -c | sort -rn
+```
+
+## 7. tr – Translate Characters
+
+- Uppercase to lowercase:
+```bash
+echo "HELLO" | tr 'A-Z' 'a-z'
+```
+- Delete characters:
+```bash
+echo "hello123" | tr -d '0-9'
+```
+- Replace characters:
+```bash
+echo "a-b-c" | tr '-' ':'
+```
+## 8. wc – Word Count
+
+- Lines:
+```bash
+wc -l file
+```
+- Words:
+```bash
+wc -w file
+```
+- Characters:
+```bash
+wc -c file
+```
+- Count lines in logs:
+```bash
+grep "ERROR" file.log | wc -l
+```
+
+## 9. head / tail
+
+- First 10 lines:
+```bash
+head file.txt
+```
+- First 5 lines:
+```bash
+head -5 file.txt
+```
+- Last 10 lines:
+```bash
+tail file.txt
+```
+- Last 20 lines:
+```bash
+tail -20 file.txt
+```
+- Follow mode (real-time logs):
+```bash
+tail -f app.log
+```
+
+## Log Pattern
+```bash
+grep "ERROR" app.log \
+| awk '{$1=$2=$3=""; print}' \
+| sort \
+| uniq -c \
+| sort -rn \
+| head -5
+```
+
+---
+
