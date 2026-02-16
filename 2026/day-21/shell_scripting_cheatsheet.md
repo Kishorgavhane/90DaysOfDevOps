@@ -966,3 +966,153 @@ awk '{print $1}' access.log | sort | uniq -c | sort -rn | head -5
 
 ---
 
+# Task 7 – Error Handling & Debugging
+
+## 1. Exit Codes
+
+- Every command in Linux returns an exit status.
+```bash
+echo $?
+```
+- `0` → Success
+- Non-zero → Failure
+
+- Manually Set Exit Code
+```bash
+exit 0   # Success
+exit 1   # General error
+exit 2   # Custom error
+```
+- Example
+```bash
+if [ ! -f "$1" ]; then
+  echo "File not found"
+  exit 1
+fi
+```
+
+## 2. set -e — Exit on Error
+
+- Stops script immediately if any command fails.
+```bash
+set -e
+````
+- Example Without `set -e`
+```bash
+mkdir test
+mkdir test   # error
+echo "Still runs"
+```
+**Script continues even after error.**
+```
+- With `set -e`
+```bash
+set -e
+mkdir test
+mkdir test   # error → script stops
+echo "Will not run"
+```
+
+## 3. set -u — Unset Variable Protection
+
+- Treats undefined variables as errors.
+```bash
+set -u
+```
+- Example
+```bash
+echo $NAME
+```
+- Without `-u` → prints empty
+- With `-u` → script stops with error
+
+## 4. set -o pipefail — Catch Pipe Errors
+
+- By default:
+```bash
+false | true
+```
+**Returns success (because last command succeeded).**
+- With pipefail:
+```bash
+set -o pipefail
+```
+**If any command in pipeline fails → whole pipeline fails.**
+- Example
+```bash
+set -euo pipefail
+
+cat missing.txt | grep error
+```
+- Without pipefail → may not fail properly
+- With pipefail → script exits immediately
+
+## 5. set -x — Debug Mode
+
+- Prints every command before execution.
+```bash
+set -x
+```
+- Example Output
+```bash
++ echo Hello
+Hello
+```
+- Disable debug:
+```bash
+set +x
+```
+
+## 6. trap — Run Cleanup on Exit
+
+- Runs command when script exits.
+**Example:**
+```bash
+trap 'echo "Cleaning up..."' EXIT
+```
+**Cleanup Example:**
+```bash
+cleanup() {
+  rm -f temp.txt
+}
+
+trap cleanup EXIT
+```
+## 7. Combined Production Pattern
+
+- header:
+```bash
+#!/bin/bash
+set -euo pipefail
+```
+- Optional debug:
+```bash
+set -x
+```
+- Add cleanup:
+```bash
+trap cleanup EXIT
+```
+
+## Summary
+
+| Feature    | Purpose                   |
+| ---------- | ------------------------- |
+| `$?`       | Check last command status |
+| `exit 1`   | Stop script with error    |
+| `set -e`   | Stop on failure           |
+| `set -u`   | Catch unset variables     |
+| `pipefail` | Catch pipeline errors     |
+| `set -x`   | Debug execution           |
+| `trap`     | Run cleanup on exit       |
+
+
+---
+- Writing clean and structured Bash scripts
+- Using conditionals and loops for automation logic
+- Creating reusable functions for modular scripting
+- Parsing and analyzing logs using grep, awk, sed, sort, and uniq
+- Building real-world one-liners for monitoring and troubleshooting
+- Implementing proper error handling using set -euo pipefail
+- Debugging scripts with set -x and handling cleanup using trap
+---
