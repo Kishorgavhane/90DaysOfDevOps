@@ -153,3 +153,198 @@ echo "Processing $FILE"
 
 ---
 
+# Task 2 – Operators & Conditionals
+
+## 1. String Comparisons
+
+- Used for comparing text values.
+```bash
+[ "$a" = "$b" ]    # Equal
+[ "$a" != "$b" ]   # Not equal
+[ -z "$var" ]      # True if empty
+[ -n "$var" ]      # True if not empty
+```
+**Example:**
+```bash
+NAME="DevOps"
+
+if [ "$NAME" = "DevOps" ]; then
+  echo "Match"
+fi
+```
+- **Always use quotes:**
+```bash
+[ "$var" = "value" ]
+```
+
+## 2. Integer Comparisons
+
+- Used for numbers.
+```bash
+[ "$a" -eq 5 ]   # Equal
+[ "$a" -ne 5 ]   # Not equal
+[ "$a" -lt 5 ]   # Less than
+[ "$a" -gt 5 ]   # Greater than
+[ "$a" -le 5 ]   # Less than or equal
+[ "$a" -ge 5 ]   # Greater than or equal
+```
+**Example:**
+```bash
+COUNT=10
+
+if [ "$COUNT" -gt 5 ]; then
+  echo "Greater than 5"
+fi
+```
+
+- **Remember:**
+- `=` is for strings
+- `-eq` is for numbers
+
+## 3. File Test Operators
+
+- Used to check file or directory properties.
+```bash
+-f file   # Is regular file
+-d dir    # Is directory
+-e file   # Exists
+-r file   # Readable
+-w file   # Writable
+-x file   # Executable
+-s file   # Not empty (size > 0)
+```
+
+**Example:**
+```bash
+if [ -f "config.txt" ]; then
+  echo "File exists"
+fi
+```
+
+## 4. if / elif / else Syntax
+
+- structure:
+```bash
+if [ condition ]; then
+  commands
+elif [ condition ]; then
+  commands
+else
+  commands
+fi
+```
+**Example:**
+```bash
+NUM=5
+
+if [ "$NUM" -gt 10 ]; then
+  echo "Greater"
+elif [ "$NUM" -eq 10 ]; then
+  echo "Equal"
+else
+  echo "Smaller"
+fi
+```
+- **Every if block must end with:**
+```bash
+fi
+```
+
+## 5. Logical Operators
+
+- Combine conditions.
+**AND (&&)**
+```bash
+[ "$a" -gt 5 ] && echo "True"
+```
+**Meaning:** Run second command only if first succeeds.
+
+**OR (||)**
+```bash
+[ -f file.txt ] || echo "File missing"
+```
+- Run second command if first fails.
+
+**NOT (!)**
+```bash
+if [ ! -f file.txt ]; then
+  echo "File not found"
+fi
+```
+**Combined Example:**
+```bash
+if [ "$a" -gt 5 ] && [ "$a" -lt 20 ]; then
+  echo "Between 5 and 20"
+fi
+```
+
+## 6. Case Statements
+
+- Used for multi-value matching.
+- Cleaner than multiple if blocks.
+**Syntax:**
+```bash
+case $var in
+  pattern1)
+    commands
+    ;;
+  pattern2)
+    commands
+    ;;
+  *)
+    default
+    ;;
+esac
+```
+**Example:**
+```bash
+ACTION="start"
+
+case $ACTION in
+  start)
+    echo "Starting service"
+    ;;
+  stop)
+    echo "Stopping service"
+    ;;
+  restart)
+    echo "Restarting service"
+    ;;
+  *)
+    echo "Invalid option"
+    ;;
+esac
+```
+
+```bash
+case "$1" in
+  deploy)
+    echo "Deploying application"
+    ;;
+  rollback)
+    echo "Rolling back"
+    ;;
+  *)
+    echo "Usage: $0 {deploy|rollback}"
+    ;;
+esac
+```
+## Revision Table
+
+| Type    | Operator | Meaning     |   |    |
+| ------- | -------- | ----------- | - | -- |
+| String  | =        | Equal       |   |    |
+| String  | !=       | Not equal   |   |    |
+| String  | -z       | Empty       |   |    |
+| String  | -n       | Not empty   |   |    |
+| Number  | -eq      | Equal       |   |    |
+| Number  | -gt      | Greater     |   |    |
+| File    | -f       | File exists |   |    |
+| File    | -d       | Directory   |   |    |
+| Logical | &&       | AND         |   |    |
+| Logical |          |             |   | OR |
+| Logical | !        | NOT         |   |    |
+
+
+---
+
