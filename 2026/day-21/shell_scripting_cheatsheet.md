@@ -851,3 +851,118 @@ grep "ERROR" app.log \
 
 ---
 
+# Task 6 – Useful Patterns & Real-World One-Liners
+
+## 1. Find & Delete Files Older Than N Days
+
+- Delete files older than 7 days:
+```bash
+find /var/log -type f -mtime +7 -delete
+```
+- 🔹 `-type f` → regular files
+- 🔹 `-mtime +7` → modified more than 7 days ago
+- 🔹 `-delete` → remove
+
+```bash
+find /var/log -type f -mtime +7
+```
+
+## 2. Count Lines in All .log Files
+```bash
+wc -l *.log
+```
+- Total count:
+```bash
+wc -l *.log | tail -1
+```
+- Count only ERROR lines:
+```bash
+grep -i "error" *.log | wc -l
+```
+
+## 3. Replace a String Across Multiple Files
+
+- Replace `localhost` with `127.0.0.1`:
+```bash
+sed -i 's/localhost/127.0.0.1/g' *.conf
+```
+- Recursive replacement:
+```bash
+grep -rl "oldvalue" . | xargs sed -i 's/oldvalue/newvalue/g'
+```
+
+## 4. Check if a Service Is Running
+
+- Using systemctl:
+```bash
+systemctl is-active --quiet nginx && echo "Running" || echo "Stopped"
+```
+- Script-friendly check:
+```bash
+if systemctl is-active --quiet nginx; then
+  echo "Service OK"
+else
+  echo "Service Down"
+fi
+```
+
+## 5. Monitor Disk Usage with Alert
+
+- Show partitions above 80%:
+```bash
+df -h | awk '$5+0 > 80'
+```
+- Send alert example:
+```bash
+df -h | awk '$5+0 > 80 {print "Disk Alert:", $0}'
+```
+
+## 6. Parse CSV from Command Line
+
+- Given `data.csv`:
+```bash
+name,age,city
+John,30,NY
+```
+- Extract second column:
+```bash
+awk -F, '{print $2}' data.csv
+```
+- Skip header:
+```bash
+awk -F, 'NR>1 {print $1}' data.csv
+```
+## 7. Parse JSON from Command Line (Using jq)
+
+- Extract field:
+```bash
+jq '.name' file.json
+```
+- Example:
+```bash
+curl -s api.com | jq '.status'
+```
+- **Note: Requires jq installed.**
+
+## 8. ail Log & Filter Errors in Real Time
+```bash
+tail -f app.log | grep --line-buffered "ERROR"
+```
+
+## 9. Retry Command Until Success
+
+```bash
+until curl -s http://localhost:8080; do
+  echo "Waiting..."
+  sleep 2
+done
+```
+
+## 10. Find Top 5 IPs from Access Log
+
+```bash
+awk '{print $1}' access.log | sort | uniq -c | sort -rn | head -5
+```
+
+---
+
