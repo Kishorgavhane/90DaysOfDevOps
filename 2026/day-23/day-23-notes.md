@@ -169,3 +169,34 @@ git branch -D feature-2
 <img width="1161" height="128" alt="image" src="https://github.com/user-attachments/assets/47e735e3-dbce-4ab1-8b94-a422ab1763c6" />
 
 
+# Push to GitHub (Remote Concept)
+
+> Git is local.
+
+> GitHub is remote server.
+
+**Connect Local to Remote**
+
+```bash
+git remote add origin https://github.com/username/devops-git-practice.git
+```
+
+**Check remote:**
+```bash
+git remote -v
+```
+
+
+<img width="1170" height="129" alt="image" src="https://github.com/user-attachments/assets/a7047191-1eef-4d85-b37f-22abdfc336a3" />
+
+
+**Push main**
+```bash
+git push -u origin main
+```
+
+What happens?
+- Uploads commits
+- Creates remote branch
+- -u sets upstream tracking
+
