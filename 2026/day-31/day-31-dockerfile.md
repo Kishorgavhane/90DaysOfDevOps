@@ -221,3 +221,66 @@ docker run -d -p 8080:80 my-website:v1
 
 ---
 
+## ASK 5 – .dockerignore
+
+- Create file:
+```bash
+vim .dockerignore
+```
+- Add:
+```bash
+node_modules
+.git
+*.md
+.env
+```
+
+**Why Important?**
+
+Without .dockerignore:
+- Image size increases
+- Sensitive files copied
+- Build slower
+It works like .gitignore.
+
+---
+
+## TASK 6 – Build Optimization
+
+- Example Bad Order
+```bash
+COPY . .
+RUN npm install
+```
+> If any file changes → npm install runs again.
+
+- Optimized Version
+```bash
+COPY package.json .
+RUN npm install
+COPY . .
+```
+
+**Now:**
+> If only app code changes → npm install layer reused.
+
+**Why Layer Order Matters?**
+
+> Docker caches layer by layer.
+> If early layer changes → all layers rebuild.
+
+
+---
+
+## HIGHLIGHT POINTS
+
+- Dockerfile = Recipe for building images
+- FROM is mandatory
+- RUN creates layers
+- CMD can override
+- ENTRYPOINT is fixed
+- .dockerignore improves security & speed
+- Layer order impacts build performance
+- nginx:alpine = lightweight production base
+
+---
