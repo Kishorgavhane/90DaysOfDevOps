@@ -213,6 +213,10 @@ docker build -t my-website:v1 .
 ```
 docker run -d -p 8080:80 my-website:v1
 ```
+
+<img width="1177" height="130" alt="image" src="https://github.com/user-attachments/assets/21aa38dd-d4f8-4abd-ab4b-27abf00a66a8" />
+
+
 **I deployed my own containerized website.**
 
 ---
