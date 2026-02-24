@@ -596,3 +596,49 @@ docker inspect mynginx
 - Mounts
 - Network mode
 - Restart policy
+
+---
+
+# TASK 5: Cleanup
+
+- Stop All Running Containers
+```bash
+docker stop $(docker ps -q)
+```
+- Remove All Stopped Containers
+```bash
+docker container prune
+```
+
+<img width="1086" height="345" alt="image" src="https://github.com/user-attachments/assets/c36cdab4-9ee4-4368-83dd-3ea7d287482a" />
+
+
+
+- Remove Unused Images
+```bash
+docker image prune
+```
+- Check Docker Disk Usage
+```bash
+docker system df
+```
+
+<img width="1086" height="128" alt="image" src="https://github.com/user-attachments/assets/13881894-cb0a-462d-95f1-a7ee81ee6ff2" />
+
+
+
+**Shows:**
+- Images space
+- Containers space
+- Volumes space
+- Cache size
+
+---
+
+**⭐ Image = Immutable Template
+⭐ Container = Runtime Instance
+⭐ Layers = Caching + Storage Optimization
+⭐ Alpine = Lightweight & Production Friendly
+⭐ Lifecycle = Full control over container state
+⭐ Logs & Inspect = Debugging tools
+⭐ Prune = Resource management**
