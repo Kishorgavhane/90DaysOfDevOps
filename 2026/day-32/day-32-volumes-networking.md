@@ -362,10 +362,51 @@ ping c2
 <img width="1153" height="492" alt="image" src="https://github.com/user-attachments/assets/42d1f5b7-3243-468e-857d-70eb0a3862ac" />
 
 
-> Now works by name.
+- Now works by name.
 
 **Why?**
 
 > Custom bridge enables automatic DNS resolution.Default bridge does not support name-based communication easily.
 
 ### TASK 6 – Put It Together
+
+**Create Network**
+```bash
+docker network create app-network
+```
+
+<img width="1153" height="44" alt="image" src="https://github.com/user-attachments/assets/77cc526a-e753-4ac6-9878-cc43f0a6480c" />
+
+
+**Run MySQL With Volume**
+```bash
+docker run -d --name mysql-db \
+--network app-network \
+-e MYSQL_ROOT_PASSWORD=1234 \
+-v mysql-data:/var/lib/mysql \
+mysql:8
+```
+
+<img width="1153" height="344" alt="image" src="https://github.com/user-attachments/assets/e8795e52-635d-4bd5-9a6a-b63904f87c87" />
+
+
+**Run App Container**
+docker run -dit --name app \
+--network app-network \
+ubuntu
+```
+
+<img width="1153" height="74" alt="image" src="https://github.com/user-attachments/assets/2c532cf6-e341-4954-a73e-a525da421025" />
+
+
+**Enter app:**
+```bash
+docker exec -it app bash
+ping mysql-db
+```
+
+<img width="1153" height="184" alt="image" src="https://github.com/user-attachments/assets/f5bbf95e-c4b1-4c2d-899c-9e88745a1ebe" />
+
+
+- Container communicates by name.
+
