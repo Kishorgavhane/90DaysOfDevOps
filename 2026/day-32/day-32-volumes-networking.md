@@ -94,6 +94,23 @@ docker run -d --name mysql-test \
 **why**
 > Because containers are ephemeral. Data stored inside container filesystem → Deleted when container removed.
 
+## 🚨 The Problem
+
+Containers are ephemeral.  
+When a container is removed, its internal data is lost.
+
+I tested this by:
+- Running a MySQL container
+- Creating a table and inserting data
+- Removing the container
+- Running a new one
+
+Result: Data was gone.
+
+Reason: Data stored inside container filesystem is deleted with the container.
+
+---
+
 ### TASK 2 – Named Volumes (Permanent Data)
 
 **Step 1 – Create Volume**
@@ -160,6 +177,22 @@ docker run -d --name mysql-test \
 Because volume lives outside container.
 - Container deleted
 - Volume survives.
+
+## Named Volumes
+
+To solve data loss, I used Docker named volumes.
+
+- Created a volume using `docker volume create`
+- Attached it to MySQL container
+- Inserted data
+- Removed container
+- Ran a new container with same volume
+
+Result: Data persisted.
+
+Learning: Volumes live outside the container lifecycle.
+
+---
 
 ### TASK 3 – Bind Mount
 
@@ -284,6 +317,21 @@ echo "<h1>Updated Live </h1>" > ~/mywebsite/index.html
 | Good for DB           | Good for development |
 
 
+## Bind Mounts
+    
+- Created a folder on host machine
+- Mounted it into an Nginx container
+- Edited index.html on host
+- Browser updated instantly
+
+Difference:
+- Named volumes are managed by Docker
+- Bind mounts directly map host folders
+
+Bind mounts are great for development.
+
+---
+
 ### TASK 4 – Docker Networking Basics
 
 **List Networks**
@@ -333,6 +381,22 @@ ping <c2_ip>
 
 <img width="1153" height="314" alt="image" src="https://github.com/user-attachments/assets/83e93038-8cc3-4e8f-acd8-35aaac8d65aa" />
 
+
+## Docker Networking
+
+- Listed Docker networks
+- Inspected default bridge network
+- Tested container communication
+
+Observation:
+- On default bridge, containers cannot ping by name
+- On custom bridge network, containers resolve each other by name
+
+Created a custom network:
+- Ran two containers
+- Verified name-based communication worked
+
+---
 
 ### TASK 5 – Custom Network
 
@@ -411,7 +475,16 @@ ping mysql-db
 
 - Container communicates by name.
 
+## Putting It Together
+
+- Created custom network
+- Ran MySQL container with volume on that network
+- Ran app container on same network
+- Verified communication using container name
+
 ---
+
+## Key Takeaways
 
 - **⭐ Containers are ephemeral**
 - **⭐ Volumes persist data**
