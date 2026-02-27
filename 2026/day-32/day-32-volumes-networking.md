@@ -162,3 +162,125 @@ Because volume lives outside container.
 - Volume survives.
 
 ### TASK 3 – Bind Mount
+
+**Step 1 – Create Host Folder**
+```bash
+mkdir ~/mywebsite
+echo "<h1>Hello from Host </h1>" > ~/mywebsite/index.html
+```
+
+<img width="1130" height="354" alt="image" src="https://github.com/user-attachments/assets/1d02db3b-fe13-4d95-9fcb-afb222e2d979" />
+
+**Step 2 – Run Nginx With Bind Mount**
+```bash
+docker run -d --name nginx-test \
+-p 8080:80 \
+-v ~/mywebsite:/usr/share/nginx/html \
+nginx
+```
+**Output**
+
+<img width="1170" height="169" alt="image" src="https://github.com/user-attachments/assets/415ee7ee-ceaf-4c19-87da-ce73a0f84cb5" />
+
+
+**Step 3 – Then I Edit File on Host**
+```bash
+echo "<h1>Updated Live </h1>" > ~/mywebsite/index.html
+```
+
+**Output**
+
+<img width="1170" height="169" alt="image" src="https://github.com/user-attachments/assets/1e243aa0-092b-4131-8b4c-2050dea585d4" />
+
+**repeted I Edit File on Host**
+```bash
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kishor Gavhane | DevOps Portfolio</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #0f172a;
+            color: #f1f5f9;
+            margin: 0;
+            padding: 40px;
+        }
+        h1, h2 {
+            color: #38bdf8;
+        }
+        section {
+            margin-bottom: 30px;
+        }
+        ul {
+            line-height: 1.8;
+        }
+        a {
+            color: #22d3ee;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Hi, I'm Kishor Gavhane 👋</h1>
+    <p>DevOps & Cloud Engineer with 7+ years of IT experience in infrastructure, cloud, and automation.</p>
+
+    <section>
+        <h2>🔧 Skills</h2>
+        <ul>
+            <li>Azure & AWS DevOps</li>
+            <li>AWS (Fundamentals)</li>
+            <li>Linux (Ubuntu)</li>
+            <li>CI/CD Pipelines</li>
+            <li>Docker & Kubernetes (Basics)</li>
+            <li>Terraform (Basics)</li>
+            <li>Networking & Firewalls</li>
+        </ul>
+    </section>
+
+    <section>
+        <h2>🚀 What I'm Learning</h2>
+        <ul>
+            <li>Advanced CI/CD</li>
+            <li>Kubernetes</li>
+            <li>Terraform</li>
+            <li>AWS</li>
+        </ul>
+    </section>
+
+    <section>
+        <h2>📫 Connect with Me</h2>
+        <ul>
+            <li>Email: kishorgavhane.dev@gmail.com</li>
+            <li>LinkedIn: <a href="https://www.linkedin.com/in/kishor-g-dev" target="_blank">www.linkedin.com/in/kishor-g-dev</a></li>
+        </ul>
+    </section>
+
+    <section>
+        <h2>🏅 Certifications</h2>
+        <ul>
+            <li>Microsoft Azure Administrator (AZ-104)</li>
+        </ul>
+    </section>
+
+</body>
+</html>
+```
+
+**Output**
+
+<img width="1232" height="681" alt="image" src="https://github.com/user-attachments/assets/41e41a5a-0cbd-46f5-8181-4a8a9a4f214c" />
+
+
+**Difference**
+
+| Named Volume          | Bind Mount           |
+| --------------------- | -------------------- |
+| Managed by Docker     | Managed by host      |
+| Stored in Docker area | Direct host folder   |
+| Good for DB           | Good for development |
+
+
