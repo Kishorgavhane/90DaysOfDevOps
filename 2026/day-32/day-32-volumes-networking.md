@@ -94,7 +94,7 @@ docker run -d --name mysql-test \
 **why**
 > Because containers are ephemeral. Data stored inside container filesystem → Deleted when container removed.
 
-## 🚨 The Problem
+## The Problem
 
 Containers are ephemeral.  
 When a container is removed, its internal data is lost.
