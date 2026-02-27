@@ -391,6 +391,7 @@ mysql:8
 
 
 **Run App Container**
+```bash
 docker run -dit --name app \
 --network app-network \
 ubuntu
