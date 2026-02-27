@@ -44,11 +44,12 @@ mkdir compose-basics
 cd compose-basics
 ```
 
-**Step 2 – Create docker-compose.yml
+**Step 2 – Create docker-compose.yml**
+```bash
 vim docker-compose.yml
+```
 
-Paste:
-
+```bash
 version: '3.9'
 
 services:
@@ -56,20 +57,28 @@ services:
     image: nginx
     ports:
       - "8080:80"
-🔹 Step 3 – Start
+```
+
+**Step 3 – Start**
+```bash
 docker compose up
+```
 
-Open:
-
+**Open: browser**
+```text
 http://localhost:8080
-🔹 Step 4 – Stop
+```
+
+**Step 4 – Stop**
+```bash
 docker compose down
-🧠 What Happened Internally?
+```
+**Happened Internally?**
 
 Compose automatically:
 
-✔ Created network
-✔ Created container
-✔ Managed lifecycle
+- Created network
+- Created container
+- Managed lifecycle
 
-You didn’t manually create anything.
+- **i didn’t manually create anything.**
