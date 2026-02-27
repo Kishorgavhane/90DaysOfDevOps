@@ -336,4 +336,36 @@ ping <c2_ip>
 
 ### TASK 5 – Custom Network
 
+**Create Network**
+```bash
+docker network create my-app-net
+```
 
+<img width="1153" height="103" alt="image" src="https://github.com/user-attachments/assets/ba90ff48-5ebe-43e4-8204-e3fedc870b6e" />
+
+
+**Run Containers On It**
+```bash
+docker run -dit --name c1 --network my-app-net ubuntu
+docker run -dit --name c2 --network my-app-net ubuntu
+```
+
+<img width="1153" height="103" alt="image" src="https://github.com/user-attachments/assets/ac1bb7fb-691f-46ca-8b09-2dc2bbe35256" />
+
+
+**Enter c1:**
+```bash
+docker exec -it c1 bash
+ping c2
+```
+
+<img width="1153" height="492" alt="image" src="https://github.com/user-attachments/assets/42d1f5b7-3243-468e-857d-70eb0a3862ac" />
+
+
+> Now works by name.
+
+**Why?**
+
+> Custom bridge enables automatic DNS resolution.Default bridge does not support name-based communication easily.
+
+### TASK 6 – Put It Together
