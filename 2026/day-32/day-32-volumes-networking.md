@@ -411,3 +411,11 @@ ping mysql-db
 
 - Container communicates by name.
 
+---
+
+- **⭐ Containers are ephemeral**
+- **⭐ Volumes persist data**
+- **⭐ Bind mounts reflect host changes instantly**
+- **⭐ Default bridge has limited name resolution**
+- **⭐ Custom network enables service-to-service communication**
+- **⭐ Production apps always use volumes + custom network**
