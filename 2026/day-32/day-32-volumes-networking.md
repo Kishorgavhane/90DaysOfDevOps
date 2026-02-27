@@ -284,3 +284,56 @@ echo "<h1>Updated Live </h1>" > ~/mywebsite/index.html
 | Good for DB           | Good for development |
 
 
+### TASK 4 – Docker Networking Basics
+
+**List Networks**
+```bash
+docker network ls
+```
+
+will see:
+
+- bridge
+- host
+- none
+
+**Inspect Bridge**
+```bash
+docker network inspect bridge
+```
+
+**Run Two Containers**
+```nash
+docker run -dit --name c1 ubuntu
+docker run -dit --name c2 ubuntu
+```
+
+**Enter c1:**
+```bash
+docker exec -it c1 bash
+```
+
+<img width="1153" height="307" alt="image" src="https://github.com/user-attachments/assets/63396810-58c8-4a24-a2a6-d8812ab6f460" />
+
+
+**Try:**
+```bash
+ping c2
+```
+> Won’t work.
+
+<img width="1153" height="148" alt="image" src="https://github.com/user-attachments/assets/1aa20ecd-0805-4920-a280-cd49004f5a42" />
+
+
+**Now try using IP:**
+```bash
+ping <c2_ip>
+```
+> Works.
+
+<img width="1153" height="314" alt="image" src="https://github.com/user-attachments/assets/83e93038-8cc3-4e8f-acd8-35aaac8d65aa" />
+
+
+### TASK 5 – Custom Network
+
+
