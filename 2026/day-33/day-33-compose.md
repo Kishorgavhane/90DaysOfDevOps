@@ -163,6 +163,10 @@ docker compose up -d
 ```text
 http://localhost:8080
 ```
+
+<img width="1293" height="461" alt="image" src="https://github.com/user-attachments/assets/8927fdf5-6cd6-41f2-bcf6-56987743094c" />
+
+
 > I will see WordPress setup page.
 
 **Test Persistence**
@@ -171,6 +175,44 @@ docker compose down
 docker compose up -d
 ```
 
+<img width="1190" height="259" alt="image" src="https://github.com/user-attachments/assets/e25df956-2fcc-4451-bdef-c00709758560" />
+
+
 > Is WordPress data still there?
 
+<img width="1293" height="461" alt="image" src="https://github.com/user-attachments/assets/6d3d549d-806d-4735-8dd7-212d317ecb72" />
+
+
 - Yes → because of named volume `db_data`
+
+
+### TASK 4 – Important Compose Commands
+
+**Detached Mode**
+```bash
+docker compose up -d
+```
+**View Running Services**
+```bash
+docker compose ps
+```
+**View Logs (All)**
+```bash
+docker compose logs -f
+```
+**View Logs (Specific)**
+```bash
+docker compose logs -f wordpress
+```
+**Stop Without Removing**
+```bash
+docker compose stop
+```
+**Remove Everything**
+```bash
+docker compose down
+```
+**Rebuild**
+```bash
+docker compose up -d --build
+```
