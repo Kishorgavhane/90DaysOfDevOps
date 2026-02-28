@@ -216,3 +216,57 @@ docker compose down
 ```bash
 docker compose up -d --build
 ```
+
+### TASK 5 – Environment Variables (.env file)
+
+**Create `.env` File**
+```bash
+vim .env
+```
+
+**Add:**
+```bash
+MYSQL_ROOT_PASSWORD=rootpass
+MYSQL_DATABASE=wordpress
+MYSQL_USER=wpuser
+MYSQL_PASSWORD=wppass
+```
+
+**Reference in docker-compose.yml**
+```text
+environment:
+  MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+```
+**Compose automatically loads `.env.`**
+
+- **.env vs environment:**
+
+| Method         | Use Case           |
+| -------------- | ------------------ |
+| Direct in YAML | Quick testing      |
+| .env file      | Cleaner + reusable |
+| Docker secrets | Production secure  |
+
+### Why Compose Is Powerful
+
+**Without Compose:**
+
+- 10+ commands
+- Manual linking
+- Manual volume creation
+
+**With Compose:**
+
+- One YAML
+- One command
+- Full stack running
+
+---
+
+- ⭐ Compose manages multi-container apps
+- ⭐ Service names act as DNS
+- ⭐ Networks auto-created
+- ⭐ Volumes defined in YAML
+- ⭐ .env improves security
+- ⭐ depends_on controls startup order
+- ⭐ docker compose down removes network + containers
