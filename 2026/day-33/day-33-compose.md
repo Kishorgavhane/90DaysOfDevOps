@@ -95,3 +95,82 @@ Compose automatically:
 - Managed lifecycle
 
 - **i didn’t manually create anything.**
+
+### TASK 3 – Two Container Setup (WordPress + MySQL)
+
+**Create New Folder**
+```bash
+mkdir wp-compose
+cd wp-compose
+```
+
+**Create docker-compose.yml**
+```bash
+version: '3.9'
+
+services:
+
+  db:
+    image: mysql:8
+    container_name: wordpress-db
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpass
+      MYSQL_DATABASE: wordpress
+      MYSQL_USER: wpuser
+      MYSQL_PASSWORD: wppass
+    volumes:
+      - db_data:/var/lib/mysql
+
+  wordpress:
+    image: wordpress
+    container_name: wordpress-app
+    restart: always
+    ports:
+      - "8080:80"
+    environment:
+      WORDPRESS_DB_HOST: db
+      WORDPRESS_DB_USER: wpuser
+      WORDPRESS_DB_PASSWORD: wppass
+      WORDPRESS_DB_NAME: wordpress
+    depends_on:
+      - db
+
+volumes:
+  db_data:
+```
+
+- **Concepts**
+  
+**Service Name = DNS Name**
+
+`WORDPRESS_DB_HOST: db`
+
+**Here:**
+- `db` is service name
+- Compose creates internal DNS
+- WordPress connects using name, not IP
+
+**Start Application**
+```bash
+docker compose up -d
+```
+
+<img width="1246" height="233" alt="image" src="https://github.com/user-attachments/assets/9bfb6d15-b54e-4599-9e04-123c4384a84a" />
+
+
+**Open:**
+```text
+http://localhost:8080
+```
+> I will see WordPress setup page.
+
+**Test Persistence**
+```bash
+docker compose down
+docker compose up -d
+```
+
+> Is WordPress data still there?
+
+- Yes → because of named volume `db_data`
