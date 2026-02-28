@@ -64,15 +64,28 @@ services:
 docker compose up
 ```
 
+<img width="1236" height="110" alt="image" src="https://github.com/user-attachments/assets/c832d8c4-627e-4669-970a-149e54c66b20" />
+
+
 **Open: browser**
 ```text
 http://localhost:8080
 ```
 
+<img width="1236" height="299" alt="image" src="https://github.com/user-attachments/assets/d9c7e47b-0198-48d9-ada9-32a691074502" />
+
+
+<img width="1246" height="604" alt="image" src="https://github.com/user-attachments/assets/7e6ca66b-6c15-4114-b872-bdadf926fb14" />
+
+
 **Step 4 – Stop**
 ```bash
 docker compose down
 ```
+
+<img width="1246" height="106" alt="image" src="https://github.com/user-attachments/assets/b4087741-e386-4834-9a60-965acf86ea74" />
+
+
 **Happened Internally?**
 
 Compose automatically:
